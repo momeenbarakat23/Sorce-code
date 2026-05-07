@@ -2210,4 +2210,18 @@
         <item>1500.0</item>
         <item>2500.0</item>
     </array>
+    <integer-array name="config_udfps_sensor_props">
+        <item>720</item>
+        <item>2364</item>
+        <item>142</item>
+    </integer-array>
+    <string-array name="config_udfps_touch_detection_options">
+        <item>0,0,1.0,0,1</item>
+        <item>1,1,1.0,0,1</item>
+        <item>1,1,1.0,.4,1</item>
+        <item>1,1,1.0,.15,15</item>
+        <item>0,0,0.7,0,1</item>
+        <item>0,0,0.83333,0,1</item>
+        <item>0,0,1.1667,0,1</item>
+    </string-array>
 </resources>

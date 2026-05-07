@@ -22,10 +22,28 @@ SET_CSC_FEATURE_CONFIG()
     return 0
 }
 
+APPEND_CSC_FEATURE_CONFIG()
+{
+    local CONFIG="$1"
+    local VALUE="$2"
+
+    if grep -q "$CONFIG" "$FILE"; then
+        if ! sed -n "s/.*<$CONFIG>\\(.*\\)<\\/$CONFIG>.*/\\1/p" "$FILE" | grep -q -w "$VALUE"; then
+            sed -i "s|</$CONFIG>|,$VALUE</$CONFIG>|" "$FILE"
+        fi
+    else
+        SET_CSC_FEATURE_CONFIG "$CONFIG" "$VALUE"
+    fi
+
+    return 0
+}
+
 LOG "- Patching CSC model"
 SOURCE_MODEL=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 1)
 TARGET_MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
 find "$WORK_DIR/optics" -type f -exec sed -i "s/SAOMC_SM-S938B/SAOMC_${TARGET_MODEL}/g" {} +
+find "$WORK_DIR/optics" "$WORK_DIR/prism" -type f -exec sed -i "s/SM-S938B/${TARGET_MODEL}/g" {} +
+find "$WORK_DIR/prism" -type f -name "enforcedeletepackage*.txt" -exec sed -i "/^Bixby/d; /^BixbyWakeup/d; /^BixbyOnDevice_/d; /^SVoiceIME/d" {} +
 
 LOG_STEP_IN "- Patching CSC Features"
 while read -r FILE; do
@@ -49,6 +67,8 @@ while read -r FILE; do
         SET_CSC_FEATURE_CONFIG "CscFeature_Setting_ConfigOperatorCallService" "TRUE"
         SET_CSC_FEATURE_CONFIG "CscFeature_Common_ConfigHiyaService" "TRUE"
         SET_CSC_FEATURE_CONFIG "CscFeature_Common_SupportRamPlus" "TRUE"
+        APPEND_CSC_FEATURE_CONFIG "CscFeature_SystemUI_ConfigDefQuickSettingItem" "ScreenRecorder"
+        APPEND_CSC_FEATURE_CONFIG "CscFeature_SystemUI_ConfigDefQuickSettingItem" "ScreenCapture"
         LOG_STEP_OUT
 
         LOG "- Encoding $FILE"

@@ -153,9 +153,6 @@ system/priv-app/SOAgent76
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
 system/priv-app/YourPhone_P1_5
-system/app/BixbyWakeup
-system/priv-app/Bixby
-system/priv-app/SVoiceIME
 "
 
 PRISM_DEBLOAT+="

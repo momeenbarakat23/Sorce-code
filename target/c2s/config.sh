@@ -36,7 +36,7 @@ TARGET_HAS_SYSTEM_EXT=false
 TARGET_AUTO_BRIGHTNESS_TYPE="5"
 TARGET_DVFS_CONFIG_NAME="dvfs_policy_exynos990_xx"
 TARGET_NFC_CHIP_VENDOR="NXP"
-TARGET_FP_SENSOR_CONFIG="google_touch_display_ultrasonic"
+TARGET_FP_SENSOR_CONFIG="google_touch_display_ultrasonic,settings=3,aod_transition_animation"
 TARGET_HAS_MASS_CAMERA_APP=false
 TARGET_HAS_QHD_DISPLAY=true
 TARGET_HFR_MODE="3"
